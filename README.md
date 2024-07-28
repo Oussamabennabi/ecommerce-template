@@ -1,3 +1,4 @@
+# Important: add storefront/.react-email deps
 ![Screenshot](https://github.com/oussamabennabi/next-prisma-tailwind-ecommerce/assets/45223699/00444538-a496-4f90-814f-7e57a580ad17)
 
 <div align="center"><h3>Full-Stack E-Commerce Platform</h3><p>Built using Typescript with Next.js, Prisma ORM and TailwindCSS.</p></div>
