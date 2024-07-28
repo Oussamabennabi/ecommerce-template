@@ -1,0 +1,34 @@
+{
+  "name": "istore",
+  "version": "1.0.0",
+  "private":true,
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "prepare": "husky install",
+    "update": "npx npm-check-updates -u",
+    "frontend":"cd apps/storefront && next dev -p 7777 ",
+    "backend":"cd apps/admin && next dev -p 8888 "
+  },
+  "author": {
+    "name": "Oussama Bennabi",
+    "url": "https://github.com/oussamabennabi"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@commitlint/cli": "^19.3.0",
+    "@commitlint/config-conventional": "^19.2.2",
+    "@trivago/prettier-plugin-sort-imports": "^4.3.0",
+    "@typescript-eslint/eslint-plugin": "^7.17.0",
+    "@typescript-eslint/parser": "^7.17.0",
+    "eslint": "^9.7.0",
+    "eslint-config-next": "^14.2.5",
+    "eslint-plugin-react": "^7.35.0",
+    "husky": "^9.1.1",
+    "lint-staged": "^15.2.7",
+    "prettier": "^3.3.3",
+    "prettier-plugin-tailwindcss": "^0.6.5"
+  }
+}
