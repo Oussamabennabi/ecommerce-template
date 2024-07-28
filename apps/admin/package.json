@@ -25,6 +25,7 @@
       "@company/slugify": "^1.0.0",
       "@company/sms": "^1.0.0",
       "@company/ui": "^1.0.0",
+      "@company/details": "^1.0.0",
       "@company/zarinpal": "^1.0.0",
       "@prisma/client": "^5.17.0",
       "@radix-ui/react-accordion": "^1.2.0",
