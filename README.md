@@ -1,16 +1,16 @@
 # Important: add storefront/.react-email deps
-![Screenshot](https://github.com/oussamabennabi/next-prisma-tailwind-ecommerce/assets/45223699/00444538-a496-4f90-814f-7e57a580ad17)
 
-<div align="center"><h3>Full-Stack E-Commerce Platform</h3><p>Built using Typescript with Next.js, Prisma ORM and TailwindCSS.</p></div>
-<div align="center">
-<a href="https://store.accretence.com">Storefront</a> 
-<span> · </span>
-<a href="https://admin.accretence.com">Admin Panel</a>
-</div>
+## usefull commands for pulling from the template :
+```
+git remote add template git@github.com:Oussamabennabi/ecommerce-template.git
+<!-- or create a branch --> : git checkout -b update-from-template
 
-## 👋 Introduction
+git fetch template
+git merge template/main --allow-unrelated-histories
 
-Welcome to the open-source Next.js E-Commerce Storefront with Admin Panel project! This project is built with TypeScript, Tailwind CSS, and Prisma, providing a powerful and flexible solution for building and managing your e-commerce website.
+
+```
+
 
 ## 🥂 Features
 
