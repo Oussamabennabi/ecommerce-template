@@ -1,7 +1,7 @@
 import config from '@/config/site'
 import Mail from '@/emails/order_notification_owner'
 import prisma from '@/lib/prisma'
-import { sendMail } from '@istore/mail'
+import { sendMail } from '@company/mail'
 import { render } from '@react-email/render'
 import { NextResponse } from 'next/server'
 

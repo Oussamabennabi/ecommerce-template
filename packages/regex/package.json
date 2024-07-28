@@ -1,5 +1,5 @@
 {
-   "name": "@istore/regex",
+   "name": "@company/regex",
    "version": "1.0.0",
    "description": "Regex Package.",
    "main": "dist/index.js",

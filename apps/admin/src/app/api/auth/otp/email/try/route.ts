@@ -3,8 +3,8 @@ import Mail from '@/emails/verify'
 import prisma from '@/lib/prisma'
 import { generateSerial } from '@/lib/serial'
 import { getErrorResponse } from '@/lib/utils'
-import { sendMail } from '@istore/mail'
-import { isEmailValid } from '@istore/regex'
+import { sendMail } from '@company/mail'
+import { isEmailValid } from '@company/regex'
 
 
 import { render } from '@react-email/render'

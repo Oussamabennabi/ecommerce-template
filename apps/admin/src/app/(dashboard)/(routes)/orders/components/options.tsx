@@ -23,7 +23,7 @@ import {
 } from '@/components/ui/select'
 import { Switch } from '@/components/ui/switch'
 import { cn, isVariableValid } from '@/lib/utils'
-import { slugify } from '@istore/slugify'
+import { slugify } from '@company/slugify'
 import { Check, ChevronsUpDown } from 'lucide-react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import React, { useEffect } from 'react'

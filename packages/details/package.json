@@ -1,9 +1,9 @@
 {
-   "name": "@company/sms",
+   "name": "@company/details",
    "version": "1.0.0",
    "private":true,
 
-   "description": "SMS Package.",
+   "description": "company details.",
    "main": "dist/index.js",
    "scripts": {
       "yarn": "yarn",

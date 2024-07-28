@@ -1,9 +1,9 @@
 {
-   "name": "@istore/ui",
+   "name": "@company/ui",
    "version": "1.0.0",
    "private":true,
 
-   "description": "UI library for @istore e-commerce platform.",
+   "description": "UI library for @company e-commerce platform.",
    "main": "dist/cjs/index.js",
    "module": "dist/esm/index.js",
    "types": "dist/index.d.ts",
