@@ -40,3 +40,44 @@ export async function GET(req: Request) {
       return new NextResponse('Internal error', { status: 500 })
    }
 }
+
+
+export async function PATCH(
+   req: Request,
+   { params }: { params: { userId: string } }
+) {
+   try {
+      if (!params.userId) {
+         return new NextResponse('userId Id is required', { status: 400 })
+      }
+
+      const userId = req.headers.get('X-USER-ID')
+
+      if (!userId) {
+         return new NextResponse('Unauthorized', { status: 401 })
+      }
+
+      const {
+         data: { name, phone,email },
+      } = await req.json()
+
+      // TODO? maybe add email isNotVerified when user changes the email??
+      const user = await prisma.user.update({
+         where: {
+            id: params.userId,
+         },
+         data: {
+           name,
+           phone,
+           email
+            
+         },
+      })
+
+      return NextResponse.json(user)
+   } catch (error) {
+      console.error('[PROFILE_PATCH]', error)
+      return new NextResponse('Internal error', { status: 500 })
+   }
+}
+

@@ -21,7 +21,7 @@ import * as z from 'zod'
 
 const formSchema = z.object({
    name: z.string().min(1),
-   email: z.string().min(1),
+   email: z.string().email(),
    phone: z.string().min(1),
 })
 
@@ -59,22 +59,15 @@ export const UserForm: React.FC<UserFormProps> = ({ initialData }) => {
       try {
          setLoading(true)
 
-         if (initialData) {
-            await fetch(`/api/products/${params.productId}`, {
+            await fetch(`/api/profile/${params.userId}`, {
                method: 'PATCH',
                body: JSON.stringify({ data }),
                cache: 'no-store',
             })
-         } else {
-            await fetch(`/api/products`, {
-               method: 'POST',
-               body: JSON.stringify({ data }),
-               cache: 'no-store',
-            })
-         }
+         
 
          router.refresh()
-         router.push(`/products`)
+         router.push(`/profile`)
          toast.success(toastMessage)
       } catch (error: any) {
          toast.error('Something went wrong.')
