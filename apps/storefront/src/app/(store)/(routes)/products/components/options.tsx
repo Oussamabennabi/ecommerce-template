@@ -148,7 +148,6 @@ export function CategoriesCombobox({ categories, initialCategory }: { categories
                         <CommandItem
                            key={category.title}
                            onSelect={handleSelect}
-                           className='hover:bg-red-200'
                            onClick={(e) => console.log(e)}
                         >
                            <Check
@@ -205,6 +204,7 @@ export function BrandCombobox({ brands, initialBrand }) {
             <Command>
                <CommandInput placeholder="Search brand..." />
                <CommandEmpty>No brand found.</CommandEmpty>
+               <CommandList>
                <CommandGroup>
                   {brands.map((brand) => (
                      <CommandItem
@@ -246,6 +246,7 @@ export function BrandCombobox({ brands, initialBrand }) {
                      </CommandItem>
                   ))}
                </CommandGroup>
+               </CommandList>
             </Command>
          </PopoverContent>
       </Popover>
