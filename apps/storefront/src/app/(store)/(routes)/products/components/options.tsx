@@ -7,6 +7,7 @@ import {
    CommandGroup,
    CommandInput,
    CommandItem,
+   CommandList
 } from '@/components/ui/command'
 import { Label } from '@/components/ui/label'
 import {
@@ -24,9 +25,10 @@ import {
 import { Switch } from '@/components/ui/switch'
 import { cn, isVariableValid } from '@/lib/utils'
 import { slugify } from '@company/slugify'
+import { Category } from '@prisma/client'
 import { Check, ChevronsUpDown } from 'lucide-react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 export function SortBy({ initialData }) {
    const router = useRouter()
@@ -76,23 +78,51 @@ export function SortBy({ initialData }) {
    )
 }
 
-export function CategoriesCombobox({ categories, initialCategory }) {
+export function CategoriesCombobox({ categories, initialCategory }: { categories: Category[], initialCategory?: string }) {
    const router = useRouter()
    const pathname = usePathname()
    const searchParams = useSearchParams()
 
-   const [open, setOpen] = React.useState(false)
-   const [value, setValue] = React.useState('')
-
-   function getCategoryTitle() {
-      for (const category of categories) {
-         if (slugify(category.title) === slugify(value)) return category.title
-      }
-   }
+   const [open, setOpen] = useState(false)
+   const [value, setValue] = useState('')
 
    useEffect(() => {
-      setValue(initialCategory)
+      setValue(initialCategory || '')
    }, [initialCategory])
+
+   const getCategoryTitle = (slug: string) => {
+      const category = categories.find(cat => slugify(cat.title) === slug)
+      return category ? category.title : ''
+   }
+
+   const handleSelect = (currentValue: string) => {
+      console.log(searchParams)
+      const slugifiedValue = slugify(currentValue)
+      let current: URLSearchParams
+
+      if (searchParams) {
+         current = new URLSearchParams(Array.from(searchParams.entries()))
+      } else {
+         current = new URLSearchParams(window.location.search)
+      }
+
+      if (slugifiedValue === value) {
+         current.delete('category')
+         setValue('')
+      } else {
+         current.set('category', slugifiedValue)
+         setValue(slugifiedValue)
+      }
+
+      const search = current.toString()
+      const query = search ? `?${search}` : ''
+
+      router.replace(`${pathname}${query}`, {
+         scroll: false,
+      })
+
+      setOpen(false)
+   }
 
    return (
       <Popover open={open} onOpenChange={setOpen}>
@@ -103,56 +133,38 @@ export function CategoriesCombobox({ categories, initialCategory }) {
                aria-expanded={open}
                className="w-full justify-between"
             >
-               {value ? getCategoryTitle() : 'Select category...'}
+               {value ? getCategoryTitle(value) : 'Select category...'}
                <ChevronsUpDown className="ml-2 h-4 shrink-0 opacity-50" />
             </Button>
          </PopoverTrigger>
          <PopoverContent className="w-full p-0">
+
             <Command>
                <CommandInput placeholder="Search category..." />
                <CommandEmpty>No category found.</CommandEmpty>
-               <CommandGroup>
-                  {categories.map((category) => (
-                     <CommandItem
-                        key={category.title}
-                        onSelect={(currentValue) => {
-                           const current = new URLSearchParams(
-                              Array.from(searchParams.entries())
-                           )
+               <CommandList>
+                  <CommandGroup>
+                     {categories.map((category) => (
+                        <CommandItem
+                           key={category.title}
+                           onSelect={handleSelect}
+                           className='hover:bg-red-200'
+                           onClick={(e) => console.log(e)}
+                        >
+                           <Check
+                              className={cn(
+                                 'mr-2 h-4 w-4',
+                                 slugify(category.title) === value ? 'opacity-100' : 'opacity-0'
+                              )}
+                           />
+                           {category.title}
+                        </CommandItem>
+                     ))}
 
-                           if (currentValue === value) {
-                              current.delete('category')
-                              setValue('')
-                           } else {
-                              current.set('category', currentValue)
-                              setValue(currentValue)
-                           }
-
-                           // cast to string
-                           const search = current.toString()
-                           // or const query = `${'?'.repeat(search.length && 1)}${search}`;
-                           const query = search ? `?${search}` : ''
-
-                           router.replace(`${pathname}${query}`, {
-                              scroll: false,
-                           })
-
-                           setOpen(false)
-                        }}
-                     >
-                        <Check
-                           className={cn(
-                              'mr-2 h-4 w-4',
-                              value === category.title
-                                 ? 'opacity-100'
-                                 : 'opacity-0'
-                           )}
-                        />
-                        {category.title}
-                     </CommandItem>
-                  ))}
-               </CommandGroup>
+                  </CommandGroup>
+               </CommandList>
             </Command>
+
          </PopoverContent>
       </Popover>
    )
