@@ -59,7 +59,7 @@ export const UserForm: React.FC<UserFormProps> = ({ initialData }) => {
       try {
          setLoading(true)
 
-            await fetch(`/api/profile/${params.userId}`, {
+            await fetch(`/api/profile`, {
                method: 'PATCH',
                body: JSON.stringify({ data }),
                cache: 'no-store',

@@ -43,13 +43,10 @@ export async function GET(req: Request) {
 
 
 export async function PATCH(
-   req: Request,
-   { params }: { params: { userId: string } }
+   req: Request
 ) {
    try {
-      if (!params.userId) {
-         return new NextResponse('userId Id is required', { status: 400 })
-      }
+     
 
       const userId = req.headers.get('X-USER-ID')
 
@@ -64,7 +61,7 @@ export async function PATCH(
       // TODO? maybe add email isNotVerified when user changes the email??
       const user = await prisma.user.update({
          where: {
-            id: params.userId,
+            id: userId,
          },
          data: {
            name,
