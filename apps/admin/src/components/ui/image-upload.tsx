@@ -2,9 +2,10 @@
 
 import { Button } from '@/components/ui/button'
 import { ImagePlus, Trash } from 'lucide-react'
-import { CldUploadWidget } from 'next-cloudinary'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
+import { UploadDropzone } from "@uploadthing/react";
+import { OurFileRouter } from "@/app/api/uploadthing/core"; 
 
 interface ImageUploadProps {
    disabled?: boolean
@@ -24,10 +25,6 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
    useEffect(() => {
       setIsMounted(true)
    }, [])
-
-   const onUpload = (result: any) => {
-      onChange(result.info.secure_url)
-   }
 
    if (!isMounted) {
       return null
@@ -61,26 +58,20 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                </div>
             ))}
          </div>
-         <CldUploadWidget onSuccess={onUpload} uploadPreset="eficpcdm">
-            {({ open }) => {
-               const onClick = () => {
-                  open()
+         <UploadDropzone<OurFileRouter,"imageUploader">
+            endpoint="imageUploader"
+            onClientUploadComplete={(res) => {
+               if (res && res.length > 0) {
+                  onChange(res[0].url);
                }
-
-               return (
-                  <Button
-                     type="button"
-                     disabled={disabled}
-                     variant="secondary"
-                     onClick={onClick}
-                     className="flex gap-2"
-                  >
-                     <ImagePlus className="h-4" />
-                     <p>Upload an Image</p>
-                  </Button>
-               )
             }}
-         </CldUploadWidget>
+            onUploadError={(error: Error) => {
+               console.error(`ERROR! ${error.message}`);
+            }}
+            config={{
+               mode: "auto",
+            }}
+         />
       </div>
    )
 }
